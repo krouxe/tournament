@@ -26,11 +26,6 @@ public abstract class Weapon extends Item {
             public int getDamage() {
                 return 0;
             }
-
-            @Override
-            public Blow blow() {
-                return new Blow(this);
-            }
         };
     }
 }

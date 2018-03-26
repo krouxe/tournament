@@ -12,8 +12,12 @@ public class Buckler extends Item {
 
     @Override
     public Blow onDefense(Blow blow) {
+        if (blow.getDamage() == 0) {
+            return blow;
+        }
+
         numberOfHits++;
-        if (blow.isWeapon(AXE)) {
+        if (blow.isWeapon(AXE) && blocks()) {
             numberOfHitsByAxe++;
         }
 
@@ -24,11 +28,15 @@ public class Buckler extends Item {
             breakIt();
         }
 
-        if (numberOfHits % 2 == 0) {
+        if (blocks()) {
             return blow.zeroDamage();
         }
 
         return blow;
+    }
+
+    private boolean blocks() {
+        return numberOfHits % 2 != 0;
     }
 
     @Override

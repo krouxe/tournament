@@ -24,23 +24,20 @@ public class Fighter {
     }
 
     public void engage(Fighter fighter) {
-        attack(fighter);
+        PingPongFight fight = new PingPongFight(this, fighter);
+        fight.resolve();
     }
 
-    private void attack(Fighter fighter) {
-        if (isAlive()) {
-            Blow blow = trait.onAttack(this, equipment.attack());
-            fighter.defend(this, blow);
-        }
+    public Blow attack() {
+        return trait.onAttack(this, equipment.attack());
     }
 
-    private void defend(Fighter fighter, Blow blow) {
+    public void defend(Blow blow) {
         Blow finalBlow = equipment.onDefense(blow);
         this.currentHitPoints = max(0, currentHitPoints - finalBlow.getDamage());
-        this.attack(fighter);
     }
 
-    private boolean isAlive() {
+    public boolean isAlive() {
         return this.currentHitPoints > 0;
     }
 
